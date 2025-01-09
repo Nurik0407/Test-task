@@ -1,6 +1,5 @@
 package com.example.test.model.entity;
 
-import com.example.test.model.enums.PaymentStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -10,20 +9,22 @@ import org.hibernate.annotations.UuidGenerator;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
-public class Payment {
+public class Requisite {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     @UuidGenerator(style = UuidGenerator.Style.TIME)
     private UUID id;
-    @Enumerated(EnumType.STRING)
-    private PaymentStatus status;
-    private BigDecimal amount;
+
+    private String name;
+    private boolean active;
+    private BigDecimal maxSum;
 
     @CreationTimestamp
     @Column(updatable = false)
@@ -31,7 +32,6 @@ public class Payment {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "requisite_id")
-    private Requisite requisite;
+    @OneToMany(mappedBy = "requisite",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<Payment> payments;
 }
