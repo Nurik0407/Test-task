@@ -1,0 +1,25 @@
+server:
+  port: 5656
+
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+  sql:
+    init:
+      mode: never
+      data-locations: classpath:data.sql
+
+logging:
+  level:
+    org:
+      springframework:
+        security: DEBUG
